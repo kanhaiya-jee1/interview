@@ -25,11 +25,13 @@ function Step1SetUp({ onStart }) {
     const [resumeText, setResumeText] = useState("");
     const [analysisDone, setAnalysisDone] = useState(false);
     const [analyzing, setAnalyzing] = useState(false);
+    const [error, setError] = useState("");
 
 
     const handleUploadResume = async () => {
         if (!resumeFile || analyzing) return;
         setAnalyzing(true)
+        setError("")
 
         const formdata = new FormData()
         formdata.append("resume", resumeFile)
@@ -45,17 +47,21 @@ function Step1SetUp({ onStart }) {
             setSkills(result.data.skills || []);
             setResumeText(result.data.resumeText || "");
             setAnalysisDone(true);
+            setError("")
 
             setAnalyzing(false);
 
         } catch (error) {
             console.log(error)
+            const errorMsg = error.response?.data?.message || error.message || "Error analyzing resume";
+            setError(errorMsg)
             setAnalyzing(false);
         }
     }
 
     const handleStart = async () => {
         setLoading(true)
+        setError("")
         try {
            const result = await axios.post(ServerUrl + "/api/interview/generate-questions" , {role, experience, mode , resumeText, projects, skills } , {withCredentials:true}) 
            console.log(result.data)
@@ -67,6 +73,8 @@ function Step1SetUp({ onStart }) {
 
         } catch (error) {
             console.log(error)
+            const errorMsg = error.response?.data?.message || error.message || "Error starting interview";
+            setError(errorMsg)
             setLoading(false)
         }
     }
@@ -144,6 +152,15 @@ function Step1SetUp({ onStart }) {
 
                     <div className='space-y-6'>
 
+                        {error && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className='bg-red-50 border border-red-200 rounded-xl p-4 text-red-700'>
+                                <p className='text-sm font-medium'>❌ {error}</p>
+                            </motion.div>
+                        )}
+
                         <div className='relative'>
                             <FaUserTie className='absolute top-4 left-4 text-gray-400' />
 
@@ -219,12 +236,32 @@ function Step1SetUp({ onStart }) {
                                 <h3 className='text-lg font-semibold text-gray-800'>
                                     Resume Analysis Result</h3>
 
+                                {role && (
+                                    <div>
+                                        <p className='font-medium text-gray-700 mb-1'>
+                                            Role:</p>
+                                        <p className='text-gray-600 bg-white p-2 rounded border border-gray-200'>
+                                            {role}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {experience && (
+                                    <div>
+                                        <p className='font-medium text-gray-700 mb-1'>
+                                            Experience:</p>
+                                        <p className='text-gray-600 bg-white p-2 rounded border border-gray-200'>
+                                            {experience}
+                                        </p>
+                                    </div>
+                                )}
+
                                 {projects.length > 0 && (
                                     <div>
                                         <p className='font-medium text-gray-700 mb-1'>
                                             Projects:</p>
 
-                                        <ul className='list-disc list-inside text-gray-600 space-y-1'>
+                                        <ul className='list-disc list-inside text-gray-600 space-y-1 bg-white p-2 rounded border border-gray-200'>
                                             {projects.map((p, i) => (
                                                 <li key={i}>{p}</li>
                                             ))}
@@ -237,7 +274,7 @@ function Step1SetUp({ onStart }) {
                                         <p className='font-medium text-gray-700 mb-1'>
                                             Skills:</p>
 
-                                        <div className='flex flex-wrap gap-2'>
+                                        <div className='flex flex-wrap gap-2 bg-white p-2 rounded border border-gray-200'>
                                             {skills.map((s, i) => (
                                                 <span key={i} className='bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm'>{s}</span>
                                             ))}

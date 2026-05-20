@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { motion } from "motion/react"
-import { BsRobot, BsCoin } from "react-icons/bs";
+import { BsRobot, BsCurrencyRupee } from "react-icons/bs";
 import { HiOutlineLogout } from "react-icons/hi";
 import { FaUserAstronaut } from "react-icons/fa";
 import { useState } from 'react';
@@ -55,7 +55,7 @@ function Navbar() {
                         setShowCreditPopup(!showCreditPopup);
                         setShowUserPopup(false)
                     }} className='flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full text-md hover:bg-gray-200 transition'>
-                        <BsCoin size={20}/>
+                        <BsCurrencyRupee size={20}/>
                         {userData?.credits || 0}
                     </button>
 

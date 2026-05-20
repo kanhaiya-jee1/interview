@@ -39,6 +39,8 @@ function Step3Report({ report }) {
   let performanceText = "";
   let shortTagline = "";
 
+  //   final socre mesdsage
+
   if (finalScore >= 8) {
     performanceText = "Ready for job opportunities.";
     shortTagline = "Excellent clarity and structured responses.";
@@ -106,7 +108,7 @@ function Step3Report({ report }) {
 
   currentY += 45;
 
-  // ================= ADVICE =================
+  // ================= ADVICE =================   for PDF
   let advice = "";
 
   if (finalScore >= 8) {
@@ -157,10 +159,10 @@ function Step3Report({ report }) {
     halign: "center",
   },
   columnStyles: {
-    0: { cellWidth: 10, halign: "center" }, // index
+    0: { cellWidth: 10, halign: "center" }, 
     1: { cellWidth: 55 }, // question
-    2: { cellWidth: 20, halign: "center" }, // score
-    3: { cellWidth: "auto" }, // feedback
+    2: { cellWidth: 20, halign: "center" }, 
+    3: { cellWidth: "auto" }, 
   },
   alternateRowStyles: {
     fillColor: [249, 250, 251],

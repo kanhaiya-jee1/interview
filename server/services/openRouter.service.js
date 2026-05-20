@@ -5,15 +5,19 @@ export const askAi = async (messages) => {
         if(!messages || !Array.isArray(messages) || messages.length === 0) {
             throw new Error("Messages array is empty.");
         }
-        const response = await axios.post("https://openrouter.ai/api/v1/chat/completions",
+        
+        // Use Groq API (free with no credits needed)
+        const response = await axios.post("https://api.groq.com/openai/v1/chat/completions",
             {
-                model: "openai/gpt-4o-mini",
-                messages: messages
+                model: "llama-3.3-70b-versatile",
+                messages: messages,
+                max_tokens: 500,
+                temperature: 0.3
 
             },
             {
             headers: {
-            Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
             'Content-Type': 'application/json',
         },});
 
@@ -25,12 +29,7 @@ export const askAi = async (messages) => {
 
     return content
     } catch (error) {
-            console.error("OpenRouter Error Details:", {
-                status: error.response?.status,
-                data: error.response?.data,
-                message: error.message
-            });
-    throw new Error(`OpenRouter API Error: ${error.response?.data?.error?.message || error.message}`);
-
+        console.error("Groq Error:", error.response?.data || error.message);
+        throw new Error(`AI API Error: ${error.response?.data?.error?.message || error.message}`);
     }
 }
