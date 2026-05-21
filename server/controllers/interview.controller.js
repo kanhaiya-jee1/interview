@@ -19,16 +19,11 @@ export const analyzeResume = async (req, res) => {
       return res.status(400).json({ message: "Resume required" });
     }
     
-    let fileBuffer;
-    if (req.file.buffer) {
-      fileBuffer = req.file.buffer;
-    } else {
-      fileBuffer = await fs.promises.readFile(req.file.path);
-      try {
-        fs.unlinkSync(req.file.path);
-      } catch (err) {
-        console.error("Failed to delete temp file:", err);
-      }
+    // With memory storage, file.buffer is always available
+    const fileBuffer = req.file.buffer;
+    
+    if (!fileBuffer) {
+      return res.status(400).json({ message: "Failed to read resume file" });
     }
     
     const uint8Array = new Uint8Array(fileBuffer);
