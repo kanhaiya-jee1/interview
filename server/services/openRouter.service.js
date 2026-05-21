@@ -6,6 +6,10 @@ export const askAi = async (messages) => {
             throw new Error("Messages array is empty.");
         }
         
+        if(!process.env.GROQ_API_KEY) {
+            throw new Error("GROQ_API_KEY is not configured. Please set it in environment variables.");
+        }
+        
         // Use Groq API (free with no credits needed)
         const response = await axios.post("https://api.groq.com/openai/v1/chat/completions",
             {
