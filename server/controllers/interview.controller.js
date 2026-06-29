@@ -74,7 +74,7 @@ Return strictly JSON:
       if (!jsonMatch) {
         throw new Error("No JSON object found in AI response.");
       }
-      // Clean up common AI JSON issues like trailing commas before parsing
+    
       let jsonString = jsonMatch[0].replace(/,\s*([\}\]])/g, '$1');
       parsed = JSON.parse(jsonString);
     } catch (parseError) {

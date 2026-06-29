@@ -10,7 +10,7 @@ export const askAi = async (messages) => {
             throw new Error("GROQ_API_KEY is not configured. Please set it in environment variables.");
         }
         
-        // Use Groq API (free with no credits needed)
+        // Use Groq API 
         const response = await axios.post("https://api.groq.com/openai/v1/chat/completions",
             {
                 model: "llama-3.3-70b-versatile",

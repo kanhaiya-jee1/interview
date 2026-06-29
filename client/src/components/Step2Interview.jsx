@@ -82,7 +82,7 @@ function Step2Interview({ interviewData, onFinish }) {
   const videoSource = voiceGender === "male" ? maleVideo : femaleVideo;
 
 
-  /* ---------------- SPEAK FUNCTION ---------------- */
+
   const speakText = (text) => {
     return new Promise((resolve) => {
       if (!window.speechSynthesis || !selectedVoice) {
@@ -92,7 +92,7 @@ function Step2Interview({ interviewData, onFinish }) {
 
       window.speechSynthesis.cancel();
 
-      // Add natural pauses after commas and periods
+    
       const humanText = text
         .replace(/,/g, ", ... ")
         .replace(/\./g, ". ... ");
@@ -101,9 +101,9 @@ function Step2Interview({ interviewData, onFinish }) {
 
       utterance.voice = selectedVoice;
 
-      // Human-like pacing
-      utterance.rate = 0.92;     // slightly slower than normal
-      utterance.pitch = 1.05;    // small warmth
+
+      utterance.rate = 0.92;     
+      utterance.pitch = 1.05;   
       utterance.volume = 1;
 
       utterance.onstart = () => {
@@ -331,7 +331,6 @@ setIsSubmitting(false)
     <div className='min-h-screen bg-linear-to-br from-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6'>
       <div className='w-full max-w-350 min-h-[80vh] bg-white rounded-3xl shadow-2xl border border-gray-200 flex flex-col lg:flex-row overflow-hidden'>
 
-        {/* video section */}
         <div className='w-full lg:w-[35%] bg-white flex flex-col items-center p-6 space-y-6 border-r border-gray-200'>
           <div className='w-full max-w-md rounded-2xl overflow-hidden shadow-xl'>
             <video
@@ -345,7 +344,7 @@ setIsSubmitting(false)
             />
           </div>
 
-          {/* subtitle */}
+        
           {subtitle && (
             <div className='w-full max-w-md bg-gray-50 border border-gray-200 rounded-xl p-4 shadow-sm'>
               <p className='text-gray-700 text-sm sm:text-base font-medium text-center leading-relaxed'>{subtitle}</p>
@@ -353,7 +352,7 @@ setIsSubmitting(false)
           )}
 
 
-          {/* timer Area */}
+      
           <div className='w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-md p-6 space-y-5'>
             <div className='flex justify-between items-center'>
               <span className='text-sm text-gray-500'>
@@ -389,8 +388,7 @@ setIsSubmitting(false)
           </div>
         </div>
 
-        {/* Text section */}
-
+      
         <div className='flex-1 flex flex-col p-4 sm:p-6 md:p-8 relative'>
           <h2 className='text-xl sm:text-2xl font-bold text-emerald-600 mb-6'>
             AI Smart Interview
